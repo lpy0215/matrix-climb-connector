@@ -1,0 +1,707 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C00000000000000000000001 /* FTMSUUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000001 /* FTMSUUIDs.swift */; };
+		C00000000000000000000002 /* StepClimberMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000002 /* StepClimberMetrics.swift */; };
+		C00000000000000000000003 /* FTMSStepClimberParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000003 /* FTMSStepClimberParser.swift */; };
+		C00000000000000000000004 /* WorkoutMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000004 /* WorkoutMessages.swift */; };
+		C00000000000000000000005 /* WorkoutRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000005 /* WorkoutRecord.swift */; };
+		C00000000000000000000006 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000006 /* Formatters.swift */; };
+		C00000000000000000000010 /* DiscoveredFitnessMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000010 /* DiscoveredFitnessMachine.swift */; };
+		C00000000000000000000011 /* ClimbMillBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000011 /* ClimbMillBluetoothManager.swift */; };
+		C00000000000000000000012 /* WorkoutRecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000012 /* WorkoutRecordStore.swift */; };
+		C00000000000000000000013 /* PhoneWorkoutMirrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000013 /* PhoneWorkoutMirrorManager.swift */; };
+		C00000000000000000000014 /* MatrixClimbConnectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000014 /* MatrixClimbConnectorApp.swift */; };
+		C00000000000000000000015 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000015 /* ContentView.swift */; };
+		C00000000000000000000016 /* DeviceDiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000016 /* DeviceDiscoveryView.swift */; };
+		C00000000000000000000017 /* WorkoutDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000017 /* WorkoutDashboardView.swift */; };
+		C00000000000000000000018 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000044 /* PrivacyInfo.xcprivacy */; };
+		C00000000000000000000019 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00000000000000000000050 /* HealthKit.framework */; };
+		C00000000000000000000020 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00000000000000000000051 /* CoreBluetooth.framework */; };
+		C00000000000000000000021 /* StepClimberMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000002 /* StepClimberMetrics.swift */; };
+		C00000000000000000000022 /* WorkoutMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000004 /* WorkoutMessages.swift */; };
+		C00000000000000000000023 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000020 /* WatchWorkoutManager.swift */; };
+		C00000000000000000000024 /* WatchAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000021 /* WatchAppDelegate.swift */; };
+		C00000000000000000000025 /* MatrixClimbConnectorWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000022 /* MatrixClimbConnectorWatchApp.swift */; };
+		C00000000000000000000026 /* WatchWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000023 /* WatchWorkoutView.swift */; };
+		C00000000000000000000027 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00000000000000000000050 /* HealthKit.framework */; };
+		C00000000000000000000028 /* MatrixClimbConnector Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B00000000000000000000061 /* MatrixClimbConnector Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C00000000000000000000030 /* FTMSStepClimberParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000030 /* FTMSStepClimberParserTests.swift */; };
+		C00000000000000000000031 /* WorkoutMessageCodecTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000031 /* WorkoutMessageCodecTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F00000000000000000000011 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E00000000000000000000002;
+			remoteInfo = "MatrixClimbConnector Watch App";
+		};
+		F00000000000000000000012 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E00000000000000000000001;
+			remoteInfo = MatrixClimbConnector;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D00000000000000000000004 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				C00000000000000000000028 /* MatrixClimbConnector Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B00000000000000000000001 /* FTMSUUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMSUUIDs.swift; sourceTree = "<group>"; };
+		B00000000000000000000002 /* StepClimberMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepClimberMetrics.swift; sourceTree = "<group>"; };
+		B00000000000000000000003 /* FTMSStepClimberParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMSStepClimberParser.swift; sourceTree = "<group>"; };
+		B00000000000000000000004 /* WorkoutMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMessages.swift; sourceTree = "<group>"; };
+		B00000000000000000000005 /* WorkoutRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRecord.swift; sourceTree = "<group>"; };
+		B00000000000000000000006 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		B00000000000000000000010 /* DiscoveredFitnessMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredFitnessMachine.swift; sourceTree = "<group>"; };
+		B00000000000000000000011 /* ClimbMillBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimbMillBluetoothManager.swift; sourceTree = "<group>"; };
+		B00000000000000000000012 /* WorkoutRecordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRecordStore.swift; sourceTree = "<group>"; };
+		B00000000000000000000013 /* PhoneWorkoutMirrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWorkoutMirrorManager.swift; sourceTree = "<group>"; };
+		B00000000000000000000014 /* MatrixClimbConnectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixClimbConnectorApp.swift; sourceTree = "<group>"; };
+		B00000000000000000000015 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B00000000000000000000016 /* DeviceDiscoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDiscoveryView.swift; sourceTree = "<group>"; };
+		B00000000000000000000017 /* WorkoutDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDashboardView.swift; sourceTree = "<group>"; };
+		B00000000000000000000020 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
+		B00000000000000000000021 /* WatchAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppDelegate.swift; sourceTree = "<group>"; };
+		B00000000000000000000022 /* MatrixClimbConnectorWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixClimbConnectorWatchApp.swift; sourceTree = "<group>"; };
+		B00000000000000000000023 /* WatchWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutView.swift; sourceTree = "<group>"; };
+		B00000000000000000000030 /* FTMSStepClimberParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMSStepClimberParserTests.swift; sourceTree = "<group>"; };
+		B00000000000000000000031 /* WorkoutMessageCodecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMessageCodecTests.swift; sourceTree = "<group>"; };
+		B00000000000000000000040 /* iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS-Info.plist"; sourceTree = "<group>"; };
+		B00000000000000000000041 /* watchOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "watchOS-Info.plist"; sourceTree = "<group>"; };
+		B00000000000000000000042 /* iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOS.entitlements; sourceTree = "<group>"; };
+		B00000000000000000000043 /* watchOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = watchOS.entitlements; sourceTree = "<group>"; };
+		B00000000000000000000044 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B00000000000000000000050 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		B00000000000000000000051 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		B00000000000000000000060 /* MatrixClimbConnector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatrixClimbConnector.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00000000000000000000061 /* MatrixClimbConnector Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MatrixClimbConnector Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00000000000000000000062 /* MatrixClimbConnectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatrixClimbConnectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D00000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00000000000000000000020 /* CoreBluetooth.framework in Frameworks */,
+				C00000000000000000000019 /* HealthKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000000000000000000012 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00000000000000000000027 /* HealthKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000000000000000000022 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A00000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000010 /* MatrixClimbConnector */,
+				A00000000000000000000014 /* MatrixClimbConnectorTests */,
+				A00000000000000000000003 /* Frameworks */,
+				A00000000000000000000002 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A00000000000000000000002 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000060 /* MatrixClimbConnector.app */,
+				B00000000000000000000061 /* MatrixClimbConnector Watch App.app */,
+				B00000000000000000000062 /* MatrixClimbConnectorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000003 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000051 /* CoreBluetooth.framework */,
+				B00000000000000000000050 /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000010 /* MatrixClimbConnector */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000020 /* Shared */,
+				A00000000000000000000021 /* iOS */,
+				A00000000000000000000022 /* watchOS */,
+				A00000000000000000000023 /* Configuration */,
+			);
+			path = MatrixClimbConnector;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000014 /* MatrixClimbConnectorTests */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000030 /* FTMSStepClimberParserTests.swift */,
+				B00000000000000000000031 /* WorkoutMessageCodecTests.swift */,
+			);
+			path = MatrixClimbConnectorTests;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000020 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000001 /* FTMSUUIDs.swift */,
+				B00000000000000000000002 /* StepClimberMetrics.swift */,
+				B00000000000000000000003 /* FTMSStepClimberParser.swift */,
+				B00000000000000000000004 /* WorkoutMessages.swift */,
+				B00000000000000000000005 /* WorkoutRecord.swift */,
+				B00000000000000000000006 /* Formatters.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000021 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000030 /* App */,
+				A00000000000000000000031 /* Bluetooth */,
+				A00000000000000000000032 /* Workout */,
+				A00000000000000000000033 /* UI */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000022 /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000034 /* App */,
+				A00000000000000000000035 /* Workout */,
+				A00000000000000000000036 /* UI */,
+			);
+			path = watchOS;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000023 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000040 /* iOS-Info.plist */,
+				B00000000000000000000041 /* watchOS-Info.plist */,
+				B00000000000000000000042 /* iOS.entitlements */,
+				B00000000000000000000043 /* watchOS.entitlements */,
+				B00000000000000000000044 /* PrivacyInfo.xcprivacy */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000030 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000014 /* MatrixClimbConnectorApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000031 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000010 /* DiscoveredFitnessMachine.swift */,
+				B00000000000000000000011 /* ClimbMillBluetoothManager.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000032 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000012 /* WorkoutRecordStore.swift */,
+				B00000000000000000000013 /* PhoneWorkoutMirrorManager.swift */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000033 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000015 /* ContentView.swift */,
+				B00000000000000000000016 /* DeviceDiscoveryView.swift */,
+				B00000000000000000000017 /* WorkoutDashboardView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000034 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000021 /* WatchAppDelegate.swift */,
+				B00000000000000000000022 /* MatrixClimbConnectorWatchApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000035 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000020 /* WatchWorkoutManager.swift */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000036 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B00000000000000000000023 /* WatchWorkoutView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E00000000000000000000001 /* MatrixClimbConnector */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 700000000000000000000000 /* Build configuration list for PBXNativeTarget "MatrixClimbConnector" */;
+			buildPhases = (
+				D00000000000000000000001 /* Sources */,
+				D00000000000000000000002 /* Frameworks */,
+				D00000000000000000000003 /* Resources */,
+				D00000000000000000000004 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F00000000000000000000001 /* PBXTargetDependency */,
+			);
+			name = MatrixClimbConnector;
+			productName = MatrixClimbConnector;
+			productReference = B00000000000000000000060 /* MatrixClimbConnector.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E00000000000000000000002 /* MatrixClimbConnector Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 800000000000000000000000 /* Build configuration list for PBXNativeTarget "MatrixClimbConnector Watch App" */;
+			buildPhases = (
+				D00000000000000000000011 /* Sources */,
+				D00000000000000000000012 /* Frameworks */,
+				D00000000000000000000013 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MatrixClimbConnector Watch App";
+			productName = "MatrixClimbConnector Watch App";
+			productReference = B00000000000000000000061 /* MatrixClimbConnector Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E00000000000000000000003 /* MatrixClimbConnectorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 900000000000000000000000 /* Build configuration list for PBXNativeTarget "MatrixClimbConnectorTests" */;
+			buildPhases = (
+				D00000000000000000000021 /* Sources */,
+				D00000000000000000000022 /* Frameworks */,
+				D00000000000000000000023 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F00000000000000000000002 /* PBXTargetDependency */,
+			);
+			name = MatrixClimbConnectorTests;
+			productName = MatrixClimbConnectorTests;
+			productReference = B00000000000000000000062 /* MatrixClimbConnectorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A00000000000000000000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					E00000000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = { enabled = 1; };
+							com.apple.HealthKit = { enabled = 1; };
+						};
+					};
+					E00000000000000000000002 = {
+						CreatedOnToolsVersion = 16.0;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = { enabled = 1; };
+							com.apple.HealthKit = { enabled = 1; };
+						};
+					};
+					E00000000000000000000003 = {
+						CreatedOnToolsVersion = 16.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 600000000000000000000000 /* Build configuration list for PBXProject "MatrixClimbConnector" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A00000000000000000000001;
+			productRefGroup = A00000000000000000000002 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E00000000000000000000001 /* MatrixClimbConnector */,
+				E00000000000000000000002 /* MatrixClimbConnector Watch App */,
+				E00000000000000000000003 /* MatrixClimbConnectorTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D00000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00000000000000000000018 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000000000000000000013 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000000000000000000023 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D00000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00000000000000000000014 /* MatrixClimbConnectorApp.swift in Sources */,
+				C00000000000000000000001 /* FTMSUUIDs.swift in Sources */,
+				C00000000000000000000002 /* StepClimberMetrics.swift in Sources */,
+				C00000000000000000000003 /* FTMSStepClimberParser.swift in Sources */,
+				C00000000000000000000004 /* WorkoutMessages.swift in Sources */,
+				C00000000000000000000005 /* WorkoutRecord.swift in Sources */,
+				C00000000000000000000006 /* Formatters.swift in Sources */,
+				C00000000000000000000010 /* DiscoveredFitnessMachine.swift in Sources */,
+				C00000000000000000000011 /* ClimbMillBluetoothManager.swift in Sources */,
+				C00000000000000000000012 /* WorkoutRecordStore.swift in Sources */,
+				C00000000000000000000013 /* PhoneWorkoutMirrorManager.swift in Sources */,
+				C00000000000000000000015 /* ContentView.swift in Sources */,
+				C00000000000000000000016 /* DeviceDiscoveryView.swift in Sources */,
+				C00000000000000000000017 /* WorkoutDashboardView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000000000000000000011 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00000000000000000000021 /* StepClimberMetrics.swift in Sources */,
+				C00000000000000000000022 /* WorkoutMessages.swift in Sources */,
+				C00000000000000000000023 /* WatchWorkoutManager.swift in Sources */,
+				C00000000000000000000024 /* WatchAppDelegate.swift in Sources */,
+				C00000000000000000000025 /* MatrixClimbConnectorWatchApp.swift in Sources */,
+				C00000000000000000000026 /* WatchWorkoutView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000000000000000000021 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00000000000000000000030 /* FTMSStepClimberParserTests.swift in Sources */,
+				C00000000000000000000031 /* WorkoutMessageCodecTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F00000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E00000000000000000000002 /* MatrixClimbConnector Watch App */;
+			targetProxy = F00000000000000000000011 /* PBXContainerItemProxy */;
+		};
+		F00000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E00000000000000000000001 /* MatrixClimbConnector */;
+			targetProxy = F00000000000000000000012 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		600000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+		};
+			name = Debug;
+		};
+		600000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+		};
+			name = Release;
+		};
+		700000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = MatrixClimbConnector/Configuration/iOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MatrixClimbConnector/Configuration/iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnector;
+				PRODUCT_MODULE_NAME = MatrixClimbConnector;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+		};
+			name = Debug;
+		};
+		700000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_ENTITLEMENTS = MatrixClimbConnector/Configuration/iOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MatrixClimbConnector/Configuration/iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnector;
+				PRODUCT_MODULE_NAME = MatrixClimbConnector;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+		};
+			name = Release;
+		};
+		800000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MatrixClimbConnector/Configuration/watchOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MatrixClimbConnector/Configuration/watchOS-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnector.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WK_COMPANION_APP_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnector;
+		};
+			name = Debug;
+		};
+		800000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MatrixClimbConnector/Configuration/watchOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MatrixClimbConnector/Configuration/watchOS-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnector.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WK_COMPANION_APP_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnector;
+			};
+			name = Release;
+		};
+		900000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnectorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatrixClimbConnector.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MatrixClimbConnector";
+		};
+			name = Debug;
+		};
+		900000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MatrixClimbConnectorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatrixClimbConnector.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MatrixClimbConnector";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		600000000000000000000000 /* Build configuration list for PBXProject "MatrixClimbConnector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				600000000000000000000001 /* Debug */,
+				600000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		700000000000000000000000 /* Build configuration list for PBXNativeTarget "MatrixClimbConnector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				700000000000000000000001 /* Debug */,
+				700000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		800000000000000000000000 /* Build configuration list for PBXNativeTarget "MatrixClimbConnector Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800000000000000000000001 /* Debug */,
+				800000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		900000000000000000000000 /* Build configuration list for PBXNativeTarget "MatrixClimbConnectorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				900000000000000000000001 /* Debug */,
+				900000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A00000000000000000000000 /* Project object */;
+}
