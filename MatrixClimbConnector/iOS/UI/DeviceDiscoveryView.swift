@@ -2,6 +2,8 @@ import SwiftUI
 
 struct DeviceDiscoveryView: View {
     @EnvironmentObject private var bluetooth: ClimbMillBluetoothManager
+    @EnvironmentObject private var workout: PhoneWorkoutMirrorManager
+    @EnvironmentObject private var recordStore: WorkoutRecordStore
 
     var body: some View {
         List {
@@ -39,7 +41,7 @@ struct DeviceDiscoveryView: View {
                         MachineRow(machine: machine)
                     }
                     .buttonStyle(.plain)
-                    .disabled(connectionIsBusy)
+                    .disabled(connectionIsBusy || isWrongRecoveryMachine(machine))
                 }
             }
 
@@ -61,6 +63,16 @@ struct DeviceDiscoveryView: View {
         default:
             false
         }
+    }
+
+    private func isWrongRecoveryMachine(_ machine: DiscoveredFitnessMachine) -> Bool {
+        let recoveryIsInProgress = workout.isWorkoutActive
+            || recordStore.recoveredCheckpoint?.state == .active
+        guard recoveryIsInProgress,
+              let expectedPeripheralID = recordStore.expectedPeripheralIdentifier else {
+            return false
+        }
+        return machine.id != expectedPeripheralID
     }
 }
 

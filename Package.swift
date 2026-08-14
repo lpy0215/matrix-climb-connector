@@ -11,13 +11,14 @@ let package = Package(
             exclude: [
                 "FTMSUUIDs.swift",
                 "Formatters.swift",
-                "WorkoutRecord.swift",
             ],
             sources: [
                 "StepClimberMetrics.swift",
                 "FTMSStepClimberParser.swift",
                 "FTMSStepClimberRecordAssembler.swift",
                 "WorkoutMessages.swift",
+                "WorkoutRecord.swift",
+                "WorkoutRecordPersistence.swift",
             ]
         ),
         .testTarget(

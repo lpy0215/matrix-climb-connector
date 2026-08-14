@@ -3,6 +3,8 @@ import SwiftUI
 struct WorkoutDashboardView: View {
     @EnvironmentObject private var bluetooth: ClimbMillBluetoothManager
     @EnvironmentObject private var workout: PhoneWorkoutMirrorManager
+    @EnvironmentObject private var recordStore: WorkoutRecordStore
+    @State private var showStopWaitingConfirmation = false
 
     private var workoutIsActive: Bool {
         workout.isWorkoutActive
@@ -38,8 +40,18 @@ struct WorkoutDashboardView: View {
 
             Section {
                 if workoutIsActive {
-                    Button("End and save workout", role: .destructive) {
-                        workout.endWorkout()
+                    if workout.isWaitingForWatch {
+                        Button("Cancel workout launch", role: .destructive) {
+                            workout.cancelPendingWorkoutLaunch()
+                        }
+                    } else if workout.canEndWorkout {
+                        Button("End and save workout", role: .destructive) {
+                            workout.endWorkout()
+                        }
+                    } else {
+                        Button("Stop waiting for Watch", role: .destructive) {
+                            showStopWaitingConfirmation = true
+                        }
                     }
                 } else {
                     Button("Start stair-climbing workout") {
@@ -51,11 +63,15 @@ struct WorkoutDashboardView: View {
                             initialMachineMetrics: bluetooth.metrics
                         )
                     }
+                    .disabled(
+                        recordStore.hasPendingRecord
+                            || recordStore.hasCorruptStorage
+                            || workout.hasUnresolvedCancelledLaunch
+                    )
                 }
                 Button("Disconnect", role: .destructive) {
                     bluetooth.disconnect()
                 }
-                .disabled(workoutIsActive)
             }
 
             if let raw = bluetooth.rawPacketHex {
@@ -65,6 +81,18 @@ struct WorkoutDashboardView: View {
                         .textSelection(.enabled)
                 }
             }
+        }
+        .confirmationDialog(
+            "Stop waiting for Apple Watch?",
+            isPresented: $showStopWaitingConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Stop waiting and preserve local record", role: .destructive) {
+                workout.stopWaitingForWatchReconnect()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This only stops waiting on the iPhone. It cannot guarantee that a workout still running on Apple Watch will stop.")
         }
     }
 
@@ -99,6 +127,7 @@ struct WorkoutDashboardView: View {
         guard let value = workout.watchSnapshot?.activeEnergyKcal else { return "--" }
         return value.formatted(.number.precision(.fractionLength(1))) + " kcal"
     }
+
 }
 
 private struct MetricCell: View {

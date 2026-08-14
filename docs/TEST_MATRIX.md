@@ -9,10 +9,10 @@ final saved workout on real devices.
 
 | Gate | Environment | What it verifies | What it cannot verify |
 | --- | --- | --- | --- |
-| Core tests | `ubuntu-latest`, `swift test --configuration debug` | FTMS parsing, malformed-packet rejection, partial-notification merging, and workout message coding | CoreBluetooth, HealthKit, SwiftUI, or Apple target integration |
+| Core tests | `ubuntu-latest`, `swift test --configuration debug` | FTMS parsing, malformed-packet rejection, record assembly, workout message coding, and local-record persistence/export formats | CoreBluetooth, HealthKit, SwiftUI, or Apple target integration |
 | iPhone build | `macos-26`, unsigned iOS Simulator build | iOS target compiles with Xcode 26 or later | Bluetooth radio behavior, signing, or installation |
 | Watch build | `macos-26`, unsigned watchOS Simulator build | Watch target and HealthKit integration compile | Watch sensors, workout mirroring, signing, or installation |
-| iOS-hosted unit tests | `macos-26`, iPhone Simulator | The same parser and codec tests pass in the app target | Real FTMS notifications or HealthKit persistence |
+| iOS-hosted unit tests | `macos-26`, iPhone Simulator | Core tests plus local-record checkpoint scheduling, recovery, retry, and corrupt-file handling | Real FTMS notifications or HealthKit persistence |
 
 The Linux core job runs first. The Xcode job starts only after it passes, so a
 fast portable failure does not consume a macOS runner. Xcode diagnostics are
