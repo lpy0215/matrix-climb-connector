@@ -4,7 +4,7 @@ An iPhone + Apple Watch SwiftUI app for FTMS Step Climber Data (`0x2ACF`). The i
 
 ## Requirements
 
-- Xcode 15 or newer
+- Xcode 26 or newer
 - iOS 17 or newer
 - watchOS 10 or newer
 - Physical iPhone and paired Apple Watch for workout mirroring
@@ -83,9 +83,9 @@ The iPhone never creates an `HKWorkout`. Only the primary Watch `HKLiveWorkoutBu
 - Positive Elevation Gain resolution: `0.1 m`
 - Metabolic Equivalent resolution: `0.1 MET`
 - reserved flags, truncation, and trailing bytes are rejected
-- partial `More Data` notifications merge over the last known values for live display
+- `More Data` notifications are assembled within one record; only complete records update the live display, and incomplete records are discarded after errors or disconnects
 
-Unit tests cover the observed `0x01FE` shape, mandatory-only data, a partial record, malformed compound energy, reserved flags, trailing data, and message codec round trips.
+Unit tests cover the observed `0x01FE` shape, mandatory-only data, multi-notification record assembly, malformed-record recovery, disconnect reset, reserved flags, trailing data, and message codec round trips.
 
 ## Local workout record
 

@@ -37,11 +37,12 @@ final class ClimbMillBluetoothManager: NSObject, ObservableObject {
     @Published private(set) var parserError: String?
     @Published private(set) var rawPacketHex: String?
 
-    var onMetrics: ((StepClimberMetrics, StepClimberMetrics, String) -> Void)?
+    var onNotification: ((FTMSStepClimberRecordAssembler.Output, String) -> Void)?
 
     private var central: CBCentralManager!
     private var peripherals: [UUID: CBPeripheral] = [:]
     private var stepClimberCharacteristic: CBCharacteristic?
+    private var recordAssembler = FTMSStepClimberRecordAssembler()
     private var scanRequested = false
 
     private let defaults: UserDefaults
@@ -60,6 +61,7 @@ final class ClimbMillBluetoothManager: NSObject, ObservableObject {
     func startScanning() {
         scanRequested = true
         guard central.state == .poweredOn else { return }
+        recordAssembler.reset()
         selectedMachineID = nil
         selectedDeviceName = nil
         metrics = nil
@@ -83,6 +85,7 @@ final class ClimbMillBluetoothManager: NSObject, ObservableObject {
     }
 
     func connect(to machine: DiscoveredFitnessMachine) {
+        recordAssembler.reset()
         guard let peripheral = peripherals[machine.id] else {
             connectionState = .failed("Peripheral is no longer available; scan again.")
             return
@@ -93,7 +96,9 @@ final class ClimbMillBluetoothManager: NSObject, ObservableObject {
         selectedMachineID = machine.id
         selectedDeviceName = machine.name
         stepClimberCharacteristic = nil
+        metrics = nil
         parserError = nil
+        rawPacketHex = nil
         updateCompatibility(for: machine.id, to: .verifying)
         connectionState = .connecting
         peripheral.delegate = self
@@ -101,12 +106,10 @@ final class ClimbMillBluetoothManager: NSObject, ObservableObject {
     }
 
     func disconnect() {
+        recordAssembler.reset()
         guard let id = selectedMachineID, let peripheral = peripherals[id] else {
             connectionState = .idle
             return
-        }
-        if let characteristic = stepClimberCharacteristic, characteristic.isNotifying {
-            peripheral.setNotifyValue(false, for: characteristic)
         }
         central.cancelPeripheralConnection(peripheral)
     }
@@ -129,6 +132,8 @@ final class ClimbMillBluetoothManager: NSObject, ObservableObject {
     }
 
     private func failCompatibility(_ peripheral: CBPeripheral, reason: String) {
+        guard peripheral.identifier == selectedMachineID else { return }
+        recordAssembler.reset()
         updateCompatibility(for: peripheral.identifier, to: .incompatible(reason))
         connectionState = .failed(reason)
         central.cancelPeripheralConnection(peripheral)
@@ -163,6 +168,9 @@ final class ClimbMillBluetoothManager: NSObject, ObservableObject {
 extension ClimbMillBluetoothManager: CBCentralManagerDelegate {
     nonisolated func centralManagerDidUpdateState(_ central: CBCentralManager) {
         Task { @MainActor in
+            if central.state != .poweredOn {
+                self.recordAssembler.reset()
+            }
             switch central.state {
             case .poweredOn:
                 if self.scanRequested { self.startScanning() }
@@ -223,6 +231,9 @@ extension ClimbMillBluetoothManager: CBCentralManagerDelegate {
 
     nonisolated func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         Task { @MainActor in
+            guard peripheral.identifier == self.selectedMachineID else { return }
+            self.recordAssembler.reset()
+            self.stepClimberCharacteristic = nil
             self.connectionState = .discoveringServices
             peripheral.discoverServices(nil)
         }
@@ -234,6 +245,8 @@ extension ClimbMillBluetoothManager: CBCentralManagerDelegate {
         error: Error?
     ) {
         Task { @MainActor in
+            guard peripheral.identifier == self.selectedMachineID else { return }
+            self.recordAssembler.reset()
             self.connectionState = .failed(error?.localizedDescription ?? "Unable to connect.")
         }
     }
@@ -244,6 +257,8 @@ extension ClimbMillBluetoothManager: CBCentralManagerDelegate {
         error: Error?
     ) {
         Task { @MainActor in
+            guard peripheral.identifier == self.selectedMachineID else { return }
+            self.recordAssembler.reset()
             self.stepClimberCharacteristic = nil
             if case .failed = self.connectionState {
                 // Preserve the concrete capability failure instead of replacing
@@ -261,6 +276,7 @@ extension ClimbMillBluetoothManager: CBCentralManagerDelegate {
 extension ClimbMillBluetoothManager: CBPeripheralDelegate {
     nonisolated func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         Task { @MainActor in
+            guard peripheral.identifier == self.selectedMachineID else { return }
             if let error {
                 self.failCompatibility(peripheral, reason: "Service discovery failed: \(error.localizedDescription)")
                 return
@@ -283,6 +299,7 @@ extension ClimbMillBluetoothManager: CBPeripheralDelegate {
         error: Error?
     ) {
         Task { @MainActor in
+            guard peripheral.identifier == self.selectedMachineID else { return }
             if let error {
                 self.failCompatibility(peripheral, reason: "Characteristic discovery failed: \(error.localizedDescription)")
                 return
@@ -317,7 +334,9 @@ extension ClimbMillBluetoothManager: CBPeripheralDelegate {
         error: Error?
     ) {
         Task { @MainActor in
-            guard characteristic.uuid == FTMSUUIDs.stepClimberData else { return }
+            guard peripheral.identifier == self.selectedMachineID,
+                  characteristic === self.stepClimberCharacteristic
+            else { return }
             if let error {
                 self.failCompatibility(peripheral, reason: "Could not enable 0x2ACF Notify: \(error.localizedDescription)")
                 return
@@ -339,12 +358,16 @@ extension ClimbMillBluetoothManager: CBPeripheralDelegate {
         error: Error?
     ) {
         Task { @MainActor in
-            guard characteristic.uuid == FTMSUUIDs.stepClimberData else { return }
+            guard peripheral.identifier == self.selectedMachineID,
+                  characteristic === self.stepClimberCharacteristic
+            else { return }
             if let error {
+                self.recordAssembler.reset()
                 self.parserError = "0x2ACF notification error: \(error.localizedDescription)"
                 return
             }
             guard let data = characteristic.value else {
+                self.recordAssembler.reset()
                 self.parserError = "0x2ACF notification had no value."
                 return
             }
@@ -352,11 +375,12 @@ extension ClimbMillBluetoothManager: CBPeripheralDelegate {
             let rawPacketHex = data.map { String(format: "%02X", $0) }.joined(separator: " ")
             self.rawPacketHex = rawPacketHex
             do {
-                let parsed = try FTMSStepClimberParser.parse(data)
-                let accumulated = parsed.merging(over: self.metrics)
-                self.metrics = accumulated
+                let output = try self.recordAssembler.ingest(data)
+                if let completedRecord = output.completedRecord {
+                    self.metrics = completedRecord
+                }
                 self.parserError = nil
-                self.onMetrics?(parsed, accumulated, rawPacketHex)
+                self.onNotification?(output, rawPacketHex)
             } catch {
                 self.parserError = error.localizedDescription
             }

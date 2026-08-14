@@ -8,10 +8,9 @@ struct MatrixClimbConnectorApp: App {
     init() {
         let bluetooth = ClimbMillBluetoothManager()
         let workout = PhoneWorkoutMirrorManager()
-        bluetooth.onMetrics = { [weak workout] parsed, accumulated, rawPacketHex in
-            workout?.receiveMachineMetrics(
-                parsedFragment: parsed,
-                accumulatedMetrics: accumulated,
+        bluetooth.onNotification = { [weak workout] output, rawPacketHex in
+            workout?.receiveMachineNotification(
+                output,
                 rawPacketHex: rawPacketHex
             )
         }
