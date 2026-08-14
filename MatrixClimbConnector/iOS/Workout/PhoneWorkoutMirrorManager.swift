@@ -84,18 +84,18 @@ final class PhoneWorkoutMirrorManager: NSObject, ObservableObject {
         }
     }
 
-    func receiveMachineMetrics(
-        parsedFragment: StepClimberMetrics,
-        accumulatedMetrics: StepClimberMetrics,
+    func receiveMachineNotification(
+        _ output: FTMSStepClimberRecordAssembler.Output,
         rawPacketHex: String
     ) {
-        latestMachineMetrics = accumulatedMetrics
         recordStore.append(machine: RecordedMachineSample(
             rawPacketHex: rawPacketHex,
-            parsedFragment: parsedFragment,
-            accumulatedMetrics: accumulatedMetrics
+            parsedFragment: output.fragment,
+            accumulatedMetrics: output.accumulatedMetrics
         ))
-        send(.machineMetrics(accumulatedMetrics))
+        guard let completedRecord = output.completedRecord else { return }
+        latestMachineMetrics = completedRecord
+        send(.machineMetrics(completedRecord))
     }
 
     func endWorkout() {

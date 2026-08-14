@@ -1,6 +1,7 @@
 import Foundation
 
-/// One complete FTMS Step Climber Data record (GATT characteristic 0x2ACF).
+/// Fields parsed from an FTMS Step Climber Data (0x2ACF) notification or an
+/// assembled data record.
 ///
 /// SPM and Matrix energy remain machine-provided diagnostic values. HealthKit
 /// active energy comes from Apple Watch and is never replaced by these values.
@@ -52,8 +53,8 @@ struct StepClimberMetrics: Codable, Equatable, Sendable {
         self.remainingTimeSeconds = remainingTimeSeconds
     }
 
-    /// Applies a partial FTMS notification over the last known values. FTMS
-    /// can split one data record across notifications using the More Data bit.
+    /// Applies a later fragment over earlier fields from the same FTMS data
+    /// record. Callers must not merge across record or connection boundaries.
     func merging(over previous: StepClimberMetrics?) -> StepClimberMetrics {
         guard let previous else { return self }
         return StepClimberMetrics(

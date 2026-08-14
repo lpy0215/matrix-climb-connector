@@ -124,24 +124,6 @@ final class FTMSStepClimberParserTests: XCTestCase {
         }
     }
 
-    func testPartialNotificationMergesOverLastKnownMetrics() throws {
-        let complete = try FTMSStepClimberParser.parse(Data([
-            0x02, 0x00,
-            0x04, 0x00,
-            0x64, 0x00,
-            0x50, 0x00
-        ]))
-        let continuation = try FTMSStepClimberParser.parse(Data([
-            0x03, 0x00,
-            0x52, 0x00
-        ]))
-        let merged = continuation.merging(over: complete)
-
-        XCTAssertEqual(merged.floors, 4)
-        XCTAssertEqual(merged.stepCount, 100)
-        XCTAssertEqual(merged.stepsPerMinute, 82)
-    }
-
     func testMergeRetainsMissingFieldsAndReplacesPresentZeroValues() {
         let previous = StepClimberMetrics(
             flags: 0x01FE,

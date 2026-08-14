@@ -16,6 +16,7 @@ let package = Package(
             sources: [
                 "StepClimberMetrics.swift",
                 "FTMSStepClimberParser.swift",
+                "FTMSStepClimberRecordAssembler.swift",
                 "WorkoutMessages.swift",
             ]
         ),
