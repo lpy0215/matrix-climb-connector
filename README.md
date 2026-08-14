@@ -4,7 +4,7 @@ An iPhone + Apple Watch SwiftUI app for FTMS Step Climber Data (`0x2ACF`). The i
 
 ## Requirements
 
-- Xcode 15 or newer
+- Xcode 26 or newer
 - iOS 17 or newer
 - watchOS 10 or newer
 - Physical iPhone and paired Apple Watch for workout mirroring

@@ -3,23 +3,7 @@ import XCTest
 
 final class FTMSStepClimberParserTests: XCTestCase {
     func testParsesObserved01FELayout() throws {
-        let packet = Data([
-            0xFE, 0x01,       // flags: bits 1...8
-            0x0C, 0x00,       // floors: 12
-            0xD2, 0x04,       // steps: 1234
-            0x54, 0x00,       // current SPM: 84
-            0x50, 0x00,       // average SPM: 80
-            0xD3, 0x00,       // elevation: 21.1 m
-            0x96, 0x00,       // total energy: 150 kcal
-            0x68, 0x01,       // energy/hour: 360 kcal
-            0x06,             // energy/minute: 6 kcal
-            0x78,             // machine HR: 120 bpm
-            0x53,             // MET: 8.3
-            0x58, 0x02,       // elapsed: 600 s
-            0x2C, 0x01        // remaining: 300 s
-        ])
-
-        let result = try FTMSStepClimberParser.parse(packet)
+        let result = try FTMSStepClimberParser.parse(observed01FEPacket)
 
         XCTAssertEqual(result.flags, 0x01FE)
         XCTAssertEqual(result.floors, 12)
@@ -34,6 +18,58 @@ final class FTMSStepClimberParserTests: XCTestCase {
         XCTAssertEqual(result.metabolicEquivalent ?? -1, 8.3, accuracy: 0.0001)
         XCTAssertEqual(result.elapsedTimeSeconds, 600)
         XCTAssertEqual(result.remainingTimeSeconds, 300)
+    }
+
+    func testRejectsPacketsShorterThanFlags() {
+        for packet in [Data(), Data([0x00])] {
+            XCTAssertThrowsError(try FTMSStepClimberParser.parse(packet)) { error in
+                XCTAssertEqual(
+                    error as? FTMSStepClimberParseError,
+                    .missingFlags(actualBytes: packet.count)
+                )
+            }
+        }
+    }
+
+    func testRejectsEveryTruncatedPrefixOfFullPacket() {
+        let expectations: [(length: Int, field: String, expectedBytes: Int, remainingBytes: Int)] = [
+            (2, "Floors", 2, 0),
+            (3, "Floors", 2, 1),
+            (4, "Step Count", 2, 0),
+            (5, "Step Count", 2, 1),
+            (6, "Steps Per Minute", 2, 0),
+            (7, "Steps Per Minute", 2, 1),
+            (8, "Average Step Rate", 2, 0),
+            (9, "Average Step Rate", 2, 1),
+            (10, "Positive Elevation Gain", 2, 0),
+            (11, "Positive Elevation Gain", 2, 1),
+            (12, "Total Energy", 2, 0),
+            (13, "Total Energy", 2, 1),
+            (14, "Energy Per Hour", 2, 0),
+            (15, "Energy Per Hour", 2, 1),
+            (16, "Energy Per Minute", 1, 0),
+            (17, "Heart Rate", 1, 0),
+            (18, "Metabolic Equivalent", 1, 0),
+            (19, "Elapsed Time", 2, 0),
+            (20, "Elapsed Time", 2, 1),
+            (21, "Remaining Time", 2, 0),
+            (22, "Remaining Time", 2, 1),
+        ]
+
+        for expectation in expectations {
+            let packet = observed01FEPacket.prefix(expectation.length)
+            XCTAssertThrowsError(try FTMSStepClimberParser.parse(Data(packet))) { error in
+                XCTAssertEqual(
+                    error as? FTMSStepClimberParseError,
+                    .truncated(
+                        field: expectation.field,
+                        expectedBytes: expectation.expectedBytes,
+                        remainingBytes: expectation.remainingBytes
+                    ),
+                    "Unexpected error for packet prefix of length \(expectation.length)"
+                )
+            }
+        }
     }
 
     func testParsesMandatoryFieldsOnly() throws {
@@ -79,10 +115,12 @@ final class FTMSStepClimberParserTests: XCTestCase {
     }
 
     func testRejectsReservedFlagBits() {
-        XCTAssertThrowsError(
-            try FTMSStepClimberParser.parse(Data([0x00, 0x02]))
-        ) { error in
-            XCTAssertEqual(error as? FTMSStepClimberParseError, .reservedFlagsSet(0x0200))
+        for bit in 9...15 {
+            let flags = UInt16(1 << bit)
+            let packet = Data([UInt8(flags & 0x00FF), UInt8(flags >> 8)])
+            XCTAssertThrowsError(try FTMSStepClimberParser.parse(packet)) { error in
+                XCTAssertEqual(error as? FTMSStepClimberParseError, .reservedFlagsSet(flags))
+            }
         }
     }
 
@@ -102,5 +140,73 @@ final class FTMSStepClimberParserTests: XCTestCase {
         XCTAssertEqual(merged.floors, 4)
         XCTAssertEqual(merged.stepCount, 100)
         XCTAssertEqual(merged.stepsPerMinute, 82)
+    }
+
+    func testMergeRetainsMissingFieldsAndReplacesPresentZeroValues() {
+        let previous = StepClimberMetrics(
+            flags: 0x01FE,
+            receivedAt: Date(timeIntervalSince1970: 1),
+            floors: 4,
+            stepCount: 100,
+            stepsPerMinute: 80,
+            averageStepRate: 75,
+            positiveElevationGainMeters: 21.1,
+            totalEnergyKcal: 150,
+            energyPerHourKcal: 360,
+            energyPerMinuteKcal: 6,
+            heartRateBPM: 120,
+            metabolicEquivalent: 8.3,
+            elapsedTimeSeconds: 600,
+            remainingTimeSeconds: 300
+        )
+        let receivedAt = Date(timeIntervalSince1970: 2)
+        let fragment = StepClimberMetrics(
+            flags: 0x00AA,
+            receivedAt: receivedAt,
+            floors: 0,
+            stepCount: 0,
+            stepsPerMinute: 0,
+            positiveElevationGainMeters: 0,
+            heartRateBPM: 0,
+            elapsedTimeSeconds: 0
+        )
+
+        XCTAssertEqual(
+            fragment.merging(over: previous),
+            StepClimberMetrics(
+                flags: 0x00AA,
+                receivedAt: receivedAt,
+                floors: 0,
+                stepCount: 0,
+                stepsPerMinute: 0,
+                averageStepRate: 75,
+                positiveElevationGainMeters: 0,
+                totalEnergyKcal: 150,
+                energyPerHourKcal: 360,
+                energyPerMinuteKcal: 6,
+                heartRateBPM: 0,
+                metabolicEquivalent: 8.3,
+                elapsedTimeSeconds: 0,
+                remainingTimeSeconds: 300
+            )
+        )
+    }
+
+    private var observed01FEPacket: Data {
+        Data([
+            0xFE, 0x01,       // flags: bits 1...8
+            0x0C, 0x00,       // floors: 12
+            0xD2, 0x04,       // steps: 1234
+            0x54, 0x00,       // current SPM: 84
+            0x50, 0x00,       // average SPM: 80
+            0xD3, 0x00,       // elevation: 21.1 m
+            0x96, 0x00,       // total energy: 150 kcal
+            0x68, 0x01,       // energy/hour: 360 kcal
+            0x06,             // energy/minute: 6 kcal
+            0x78,             // machine HR: 120 bpm
+            0x53,             // MET: 8.3
+            0x58, 0x02,       // elapsed: 600 s
+            0x2C, 0x01        // remaining: 300 s
+        ])
     }
 }

@@ -1,4 +1,4 @@
-name: Xcode CI
+name: CI
 
 on:
   push:
@@ -10,7 +10,24 @@ permissions:
   contents: read
 
 jobs:
+  core-tests:
+    name: Core tests (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Swift version
+        run: swift --version
+
+      - name: Run cross-platform core tests
+        run: swift test --configuration debug
+
   build-and-test:
+    name: Xcode build and test
+    needs: core-tests
     runs-on: macos-26
     timeout-minutes: 45
 
