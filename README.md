@@ -89,9 +89,22 @@ Unit tests cover the observed `0x01FE` shape, mandatory-only data, multi-notific
 
 ## Local workout record
 
-Every accepted FTMS notification and every Watch snapshot is retained in:
+Every accepted FTMS notification and Watch snapshot is retained in memory while
+a workout is active. The in-progress record is atomically checkpointed on a
+five-second cadence and whenever the app leaves the foreground in:
+
+`Application Support/MatrixClimbConnector/active-workout-record.json`
+
+Completed records remain backward-compatible with the existing top-level JSON
+array in:
 
 `Application Support/MatrixClimbConnector/workout-records.json`
+
+If the app restarts with an unfinished checkpoint, it keeps that record isolated
+until the matching mirrored Watch session reconnects or the user exports and
+discards it. The Diagnostics menu exports the current in-memory snapshot,
+including raw packets and visible storage errors, even when normal persistence
+has failed.
 
 The record includes peripheral identifier/name, start/end timestamps, full parsed Matrix metric samples, Apple Watch heart rate snapshots, and Apple Active Energy snapshots. It is local app data and does not add SPM or Matrix step count to unrelated HealthKit quantity types.
 
