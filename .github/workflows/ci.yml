@@ -1,0 +1,97 @@
+name: Xcode CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: macos-26
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 26
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p Artifacts
+          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          xcodebuild -version | tee Artifacts/xcode-version.log
+
+          xcode_version="$(xcodebuild -version | awk 'NR == 1 { print $2 }')"
+          xcode_major="${xcode_version%%.*}"
+          if (( xcode_major < 26 )); then
+            echo "Xcode 26 or later is required; selected ${xcode_version}." | tee -a Artifacts/xcode-version.log
+            exit 1
+          fi
+
+      - name: Inspect project and simulator runtimes
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild -list -project MatrixClimbConnector.xcodeproj 2>&1 | tee Artifacts/project-list.log
+          xcrun simctl list runtimes 2>&1 | tee Artifacts/simulator-runtimes.log
+
+      - name: Build iPhone app without code signing
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project MatrixClimbConnector.xcodeproj \
+            -scheme MatrixClimbConnector \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath DerivedData/iPhone \
+            -resultBundlePath Artifacts/iPhone-build.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build 2>&1 | tee Artifacts/iPhone-build.log
+
+      - name: Build Watch app without code signing
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project MatrixClimbConnector.xcodeproj \
+            -scheme 'MatrixClimbConnector Watch App' \
+            -configuration Debug \
+            -destination 'generic/platform=watchOS Simulator' \
+            -derivedDataPath DerivedData/Watch \
+            -resultBundlePath Artifacts/Watch-build.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build 2>&1 | tee Artifacts/Watch-build.log
+
+      - name: Run unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project MatrixClimbConnector.xcodeproj \
+            -scheme MatrixClimbConnector \
+            -configuration Debug \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
+            -derivedDataPath DerivedData/Tests \
+            -resultBundlePath Artifacts/Tests.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            test 2>&1 | tee Artifacts/Tests.log
+
+      - name: Upload Xcode diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcode-diagnostics-${{ github.run_attempt }}
+          path: |
+            Artifacts/*.log
+            Artifacts/*.xcresult
+          if-no-files-found: warn
+          retention-days: 14

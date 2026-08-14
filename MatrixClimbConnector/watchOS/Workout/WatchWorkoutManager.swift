@@ -200,12 +200,30 @@ final class WatchWorkoutManager: NSObject, ObservableObject {
                 end: end
             )
             do {
-                try await builder.add([sample])
+                try await add([sample], to: builder)
             } catch {
                 warnings.append("flights climbed: \(error.localizedDescription)")
             }
         }
         return warnings
+    }
+
+    private func add(
+        _ samples: [HKSample],
+        to builder: HKWorkoutBuilder
+    ) async throws {
+        try await withCheckedThrowingContinuation {
+            (continuation: CheckedContinuation<Void, Error>) in
+            builder.add(samples) { success, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else if success {
+                    continuation.resume()
+                } else {
+                    continuation.resume(throwing: WorkoutBuilderError.addSamplesFailed)
+                }
+            }
+        }
     }
 
     private func finishWorkout(at end: Date) async {
@@ -358,6 +376,14 @@ private enum WorkoutPreparationError: LocalizedError {
 
     var errorDescription: String? {
         "Workout preparation was interrupted."
+    }
+}
+
+private enum WorkoutBuilderError: LocalizedError {
+    case addSamplesFailed
+
+    var errorDescription: String? {
+        "HealthKit did not add the workout samples."
     }
 }
 
